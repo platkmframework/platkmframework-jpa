@@ -17,46 +17,24 @@
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
 package org.platkmframework.jpa.base;
-
+ 
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.platkmframework.common.domain.filter.criteria.DeleteCriteria;
 import org.platkmframework.common.domain.filter.criteria.FilterCriteria;
-import org.platkmframework.database.query.QueryDao;
-import org.platkmframework.database.query.QueryManagerDao;
-import org.platkmframework.database.query.manager.QueryManager;
-import org.platkmframework.databasereader.model.Column;
-import org.platkmframework.databasereader.model.Table;
-import org.platkmframework.jpa.mapping.DatabaseMapper; 
+import org.platkmframework.database.query.common.ColumnInfoValue;
+import org.platkmframework.jpa.exception.DatabaseValidationException;
+import org.platkmframework.jpa.exception.PlatkmJpaException;
 
+import jakarta.persistence.Query; 
 
-/**
- *   Author: 
- *     Eduardo Iglesias
- *   Contributors: 
- *   	Eduardo Iglesias - initial API and implementation
- **/
-public interface PlatkmEntityManager extends EntityManager, PlatkmDb{
-      
-	public QueryDao getQueryDao();
-	
-	public QueryManagerDao getQueryManagerDao();
+public interface PlatkmEntityManager  {
 	
 	PlatkmQuery createQuery(FilterCriteria filterCriteria, List<Object> params, Class<?> returnClass);
 	
 	Query createQuery(DeleteCriteria deleteCriteria, List<Object> params);
 	
-	public QueryManager getQueryManager();
+	public ColumnInfoValue insert(String entity, List<ColumnInfoValue> columns) throws  DatabaseValidationException, PlatkmJpaException;
 	
-	public DatabaseMapper getDatabaseMapper();
-	
-	List<Table> getMetadata();
-	
-	List<Column> getTableColumnMetaData(String tablename);
-	
-	List<String> getTablePksContraints(String tableName); 
-	
+	public void update(String entity, List<ColumnInfoValue> columns) throws DatabaseValidationException, PlatkmJpaException;
 }

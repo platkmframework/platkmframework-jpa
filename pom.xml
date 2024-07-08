@@ -1,59 +1,78 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.platkmframework</groupId>
   <artifactId>platkmframework-jpa</artifactId>
-  <version>1.0.0-beta</version>
-  <build> 
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-        <configuration>
-          <release>20</release>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-<dependencies>
-	<dependency>
-	  <groupId>org.platkmframework</groupId>
-	  <artifactId>platkmframework-database-query-common</artifactId>
-	    <version>1.0.0-beta</version>
-	</dependency>
-	<dependency>
-	  <groupId>org.platkmframework</groupId>
-	  <artifactId>platkmframework-database-reader-model</artifactId>
-	  <version>1.0.0-beta</version>
-	</dependency>
-	<dependency>
-	  <groupId>org.platkmframework</groupId>
-	  <artifactId>platkmframework-content</artifactId>
-	  <version>1.0.0-beta</version>
-	</dependency>
-	<dependency>
-	  <groupId>org.platkmframework</groupId>
-	  <artifactId>platkmframework-annotation</artifactId>
-	  <version>1.0.0-beta</version>
-	</dependency>
-	<dependency>
-	    <groupId>javax.persistence</groupId>
-	    <artifactId>javax.persistence-api</artifactId>
-	    <version>2.2</version>
-	</dependency> 	
-	<dependency>
-	    <groupId>org.apache.commons</groupId>
-	    <artifactId>commons-pool2</artifactId>
-	    <version>2.11.1</version>
-	</dependency>
+  
+   <parent>
+  	<groupId>org.platkmframework</groupId>
+  	<artifactId>platkmframework-parent-jpa</artifactId>
+  	<version>1.0.0</version>
+  </parent>
+  
+	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+	</properties>
+  
+    <build>
+        <plugins>
+	      <plugin>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>3.8.0</version>
+	        <configuration>
+	          <release>20</release>
+	        </configuration>
+	      </plugin>			
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> 
+        </plugins>
+    </build>  
+    
+	<distributionManagement>
+		<repository>
+			<id>platkmframework</id>
+			<name>Releases</name>
+			<url>https://nexus.platkmframework.org/repository/platkmframework-releases/</url>
+		</repository>
+	 
+		<snapshotRepository>
+			<id>platkmframework</id>
+			<name>Snapshot</name>
+			<url>https://nexus.platkmframework.org/repository/platkmframework-snapshot/</url>
+		</snapshotRepository>
+	
+	</distributionManagement>
+	
+  <dependencies>
   	<dependency>
-	    <groupId>org.apache.logging.log4j</groupId>
-	    <artifactId>log4j-core</artifactId>
-	    <version>2.17.0</version>
+  		<groupId>org.platkmframework</groupId>
+  		<artifactId>platkmframework-persistence-filter</artifactId>
+  		<version>1.0.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.platkmframework</groupId>
+  		<artifactId>platkmframework-proxy</artifactId>
+  		<version>1.0.0</version>
+  	</dependency>
+  	
+	<dependency>
+	    <groupId>org.aspectj</groupId>
+	    <artifactId>aspectjweaver</artifactId>
+	    <version>1.9.21</version> 
 	</dependency>
 	<dependency>
-	    <groupId>org.apache.logging.log4j</groupId>
-	    <artifactId>log4j-api</artifactId>
-	    <version>2.17.0</version>
-	</dependency>  
-</dependencies>
+	    <groupId>org.aspectj</groupId>
+	    <artifactId>aspectjrt</artifactId>
+	    <version>1.9.20.1</version>
+	</dependency>
+  </dependencies>
 </project>

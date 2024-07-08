@@ -16,9 +16,12 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
+package org.platkmframework.database.query.common;
 
-import jakarta.persistence.Query;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *   Author: 
@@ -26,10 +29,32 @@ import jakarta.persistence.Query;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
-
-	int getPage();
-
-	long getPageCount();
+public class Result implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	List<String> columns;
+	private List<Object[]> list;
+	
+	
+	public List<String> getColumns() {
+		return columns;
+	}
+	public void setColumns(List<String> columns) {
+		if(columns == null) columns = new ArrayList<>();
+		this.columns = columns;
+	}
+	public List<Object[]> getList() {
+		if(list == null) list = new ArrayList<>();
+		return list;
+	}
+	public void setList(List<Object[]> list) {
+		this.list = list;
+	}
+	
+ 
 
 }

@@ -16,9 +16,9 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
+package org.platkmframework.database.query.common.vo;
 
-import jakarta.persistence.Query;
+import jakarta.persistence.Column;
 
 /**
  *   Author: 
@@ -26,10 +26,38 @@ import jakarta.persistence.Query;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
+public class OptionResult 
+{ 
+	@Column(name="id",length=255) 
+	private String id;
+	
+	@Column(name="text",length=255)
+	private String text;
+	
+	public OptionResult() {
+		super();
+	}
 
-	int getPage();
-
-	long getPageCount();
+	public OptionResult(String id, String text) {
+		super();
+		this.id = id;
+		this.text = text;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	
+	
 
 }

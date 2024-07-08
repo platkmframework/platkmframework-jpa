@@ -2,47 +2,61 @@ package org.platkmframework.jpa.persistence;
 
 import java.util.Map;
 
-import javax.persistence.Cache;
-import javax.persistence.EntityGraph;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnitUtil;
-import javax.persistence.Query;
-import javax.persistence.SynchronizationType;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.metamodel.Metamodel;
-
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.pool2.BasePooledObjectFactory;
-import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.platkmframework.jpa.base.PlatkmEntityManager;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.platkmframework.jpa.base.PlatkmORMEntityManager;
 import org.platkmframework.jpa.dll.SchemaGenerator;
-import org.platkmframework.jpa.exception.PlatkmJpaException; 
+import org.platkmframework.jpa.exception.PlatkmJpaException;
+import org.platkmframework.util.DataTypeUtil;
+
+import jakarta.persistence.Cache;
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceUnitUtil;
+import jakarta.persistence.Query;
+import jakarta.persistence.SynchronizationType;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.metamodel.Metamodel; 
 
 public class PlatkmEntityManagerFactory  implements EntityManagerFactory{
+	
+	private static Logger logger = LoggerFactory.getLogger(PlatkmEntityManagerFactory.class);
 
-	private ObjectPool<PlatkmEntityManager> emPool;
+	private GenericObjectPool<PlatkmORMEntityManager> emPool;
 	private boolean opened; 
 	private PersistenceUnit  persistenceUnit;
 	private SchemaGenerator schemaGenerator;
 	
 	public PlatkmEntityManagerFactory(PersistenceUnit  persistenceUnit, 
-									BasePooledObjectFactory<PlatkmEntityManager> poolFactory,
+									BasePooledObjectFactory<PlatkmORMEntityManager> poolFactory,
 									SchemaGenerator schemaGenerator) {
 		super();  
 		this.persistenceUnit = persistenceUnit;
 		this.emPool = new GenericObjectPool<>(poolFactory); 
+		/*
+		 * this.emPool.setMaxIdle(-1);  org.platkmframework.database.querymanagers.path
+		 * this.emPool.setMaxTotal(-1);
+		 */
+		this.emPool.setMaxIdle(DataTypeUtil.getIntegerValue(persistenceUnit.getProperties().get("org.platkmframework.platkmframework.entitymanager.maxidle"), GenericObjectPoolConfig.DEFAULT_MAX_IDLE));
+		this.emPool.setMaxTotal(DataTypeUtil.getIntegerValue(persistenceUnit.getProperties().get("org.platkmframework.platkmframework.entitymanager.maxtotal"), GenericObjectPoolConfig.DEFAULT_MAX_TOTAL));
+		this.emPool.setBlockWhenExhausted(false);
 		opened = true;
 		this.schemaGenerator = schemaGenerator;
 	}
 
 	@Override
-	public synchronized PlatkmEntityManager createEntityManager() {  
+	public synchronized PlatkmORMEntityManager createEntityManager() {  
 		try {
 			if(!opened) throw new IllegalStateException("entity manager factory has been closed");
 			  
-			return this.emPool.borrowObject();
+			PlatkmORMEntityManager em = this.emPool.borrowObject();
+			logger.info("borrowObjec -> " + em.toString());
+			return em;
 			//platkmEntityManager.getTransaction().begin();
 			//threadLocal.set(platkmEntityManager);
 			  
@@ -52,12 +66,12 @@ public class PlatkmEntityManagerFactory  implements EntityManagerFactory{
 	}
 
 	@Override
-	public PlatkmEntityManager createEntityManager(Map map) { 
+	public PlatkmORMEntityManager createEntityManager(Map map) { 
 		return  createEntityManager();
 	}
 
 	@Override
-	public PlatkmEntityManager createEntityManager(SynchronizationType synchronizationType) {
+	public PlatkmORMEntityManager createEntityManager(SynchronizationType synchronizationType) {
 		throw new NotImplementedException("generateSchema(PersistenceUnitInfo info, Map map)");
 	}
 
@@ -117,8 +131,9 @@ public class PlatkmEntityManagerFactory  implements EntityManagerFactory{
 		throw new NotImplementedException("generateSchema(PersistenceUnitInfo info, Map map)"); 
 	}
 
-	public void returnObject(PlatkmEntityManager platkmEntityManager) {
+	public void returnObject(PlatkmORMEntityManager platkmEntityManager) {
 		try {
+			logger.info("returnObject -> " + platkmEntityManager.toString());
 			emPool.returnObject(platkmEntityManager);
 		} catch (Exception e) {
 			throw new PlatkmJpaException(e);

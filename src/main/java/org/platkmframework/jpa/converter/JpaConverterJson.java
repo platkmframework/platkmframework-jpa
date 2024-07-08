@@ -18,13 +18,13 @@
  *******************************************************************************/
 package org.platkmframework.jpa.converter;
  
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
-
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.platkmframework.content.json.JsonUtil; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.platkmframework.content.json.JsonUtil;
+
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter; 
   
 /**
  *   Author: 
@@ -35,7 +35,7 @@ import org.platkmframework.content.json.JsonUtil;
 @Converter(autoApply = true)
 public abstract class JpaConverterJson<E extends Object>  implements AttributeConverter< Object , String> {
 	
-	private static final Logger logger = LogManager.getLogger(JpaConverterJson.class);
+	private static Logger logger = LoggerFactory.getLogger(JpaConverterJson.class);
 
 	private Class<E> class1;
 
@@ -49,7 +49,7 @@ public abstract class JpaConverterJson<E extends Object>  implements AttributeCo
     	
       return JsonUtil.objectToJson(meta);
     } catch (Exception ex) {
-    	logger.error(ex);
+    	logger.error(ex.getMessage());
     	return null; 
     }
   }
@@ -62,7 +62,7 @@ public abstract class JpaConverterJson<E extends Object>  implements AttributeCo
     	
       return JsonUtil.jsonToObject(dbData, this.class1);
     } catch (Exception ex) {
-    	logger.error(ex);
+    	logger.error(ex.getMessage());
     	return null;
     }
   }

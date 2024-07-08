@@ -22,16 +22,16 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.apache.commons.lang3.StringUtils;
 import org.platkmframework.database.query.common.ColumnInfoValue;
 import org.platkmframework.util.Util;
 import org.platkmframework.util.error.InvocationException;
 import org.platkmframework.util.reflection.ReflectionUtil;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
  
 
 

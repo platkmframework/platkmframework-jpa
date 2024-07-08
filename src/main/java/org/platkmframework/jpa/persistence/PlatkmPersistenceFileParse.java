@@ -16,13 +16,14 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.persistence.reader;
+package org.platkmframework.jpa.persistence;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -31,8 +32,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.platkmframework.content.project.ProjectContent;
 import org.platkmframework.jpa.exception.PlatkmJpaException;
 import org.w3c.dom.Document;
@@ -50,16 +51,18 @@ import org.xml.sax.SAXException;
  **/
 public class PlatkmPersistenceFileParse{
 	
-	private static final Logger logger = LogManager.getLogger(PlatkmPersistenceFileParse.class);
+	private static Logger logger = LoggerFactory.getLogger(PlatkmPersistenceFileParse.class);
 	
-	public static List<PersistenceInfo> persistenceInfoList = new ArrayList<PersistenceInfo>();
+	public List<PersistenceInfo> parse() throws PlatkmJpaException {
+		return parseByInputStream(PlatkmPersistenceFileParse.class.getClassLoader().getResourceAsStream("META-INF/persistence.xml"));
+	}
 	
-	public static List<PersistenceInfo> parse() throws PlatkmJpaException {
+	public List<PersistenceInfo> parseByInputStream(InputStream inputStream) throws PlatkmJpaException {
 		 
-		
+		if(inputStream == null) return Collections.emptyList();
+		List<PersistenceInfo> persistenceInfoList = new ArrayList<>();
 		try {
 		
-			InputStream inputStream = PlatkmPersistenceFileParse.class.getClassLoader().getResourceAsStream("META-INF/persistence.xml");
 			String strPersistence = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name());
 			
 			for (Object key: ProjectContent.instance().getAppProperties().keySet()) {

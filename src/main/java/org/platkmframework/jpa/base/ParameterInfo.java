@@ -18,9 +18,8 @@
  *******************************************************************************/
 package org.platkmframework.jpa.base;
 
-import javax.persistence.Parameter;
-import javax.persistence.TemporalType;
-
+import jakarta.persistence.Parameter;
+import jakarta.persistence.TemporalType;
 
 /**
  *   Author: 

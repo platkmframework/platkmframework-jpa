@@ -16,9 +16,14 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
+package org.platkmframework.database.query.common.limit;
 
-import jakarta.persistence.Query;
+import javax.naming.LimitExceededException; 
+
+import org.platkmframework.annotation.Service;
+import org.platkmframework.annotation.limit.ApplicationLimit;
+import org.platkmframework.content.ObjectContainer;
+
 
 /**
  *   Author: 
@@ -26,10 +31,19 @@ import jakarta.persistence.Query;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
-
-	int getPage();
-
-	long getPageCount();
+@Service
+public class LimitChecker {
+	
+	 
+	public boolean check(Object obj) throws LimitExceededException {
+		
+		if(obj.getClass().isAnnotationPresent(ApplicationLimit.class)) {
+			ApplicationLimit applicationLimit = obj.getClass().getAnnotation(ApplicationLimit.class);
+			Limit limit = (Limit)  ObjectContainer.instance().geApptScopeObj(applicationLimit.limitClass());
+			if(!limit.check(obj)) throw new ApplicationLimitException("No se pueden crear m�s registros en este proceso, por exceder el l�mite permitido");
+		}
+		
+		return true;
+	}
 
 }

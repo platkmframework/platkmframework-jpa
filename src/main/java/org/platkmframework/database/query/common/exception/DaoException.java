@@ -16,9 +16,10 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
+package org.platkmframework.database.query.common.exception;
 
-import jakarta.persistence.Query;
+import org.platkmframework.annotation.TruslyException;
+
 
 /**
  *   Author: 
@@ -26,10 +27,22 @@ import jakarta.persistence.Query;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
+@TruslyException
+public class DaoException extends Exception{
 
-	int getPage();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	long getPageCount();
+	public DaoException() {
+		super(); 
+	}
 
+	public DaoException(String message) {
+		super(message); 
+	}
+
+	
+	
 }

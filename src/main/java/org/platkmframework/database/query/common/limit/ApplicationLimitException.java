@@ -16,18 +16,32 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
- 
-import java.util.List;
- 
-import org.platkmframework.database.query.common.ColumnInfoValue;
-import org.platkmframework.jpa.exception.DatabaseValidationException;
-import org.platkmframework.jpa.exception.PlatkmJpaException; 
+package org.platkmframework.database.query.common.limit;
 
-public interface PlatkmDb  {
+import org.platkmframework.annotation.TruslyException;
 
- 
-	public ColumnInfoValue insertSQL(String tableName, List<ColumnInfoValue> columns) throws  DatabaseValidationException, PlatkmJpaException;
+
+/**
+ *   Author: 
+ *     Eduardo Iglesias
+ *   Contributors: 
+ *   	Eduardo Iglesias - initial API and implementation
+ **/
+@TruslyException
+public class ApplicationLimitException extends RuntimeException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ApplicationLimitException(String message) {
+		super(message); 
+	}
+
+	public ApplicationLimitException(Throwable cause) {
+		super(cause); 
+	}
 	
-	public void updateSQL(String tablename, List<ColumnInfoValue> columns) throws DatabaseValidationException, PlatkmJpaException;
+
 }

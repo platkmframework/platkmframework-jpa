@@ -18,9 +18,8 @@
  *******************************************************************************/
 package org.platkmframework.jpa.persistence;
 
-import javax.persistence.spi.LoadState;
-import javax.persistence.spi.ProviderUtil;
-
+import jakarta.persistence.spi.LoadState;
+import jakarta.persistence.spi.ProviderUtil;
 
 /**
  *   Author: 

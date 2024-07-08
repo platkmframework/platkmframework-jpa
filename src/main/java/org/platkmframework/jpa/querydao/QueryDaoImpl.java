@@ -20,19 +20,19 @@ package org.platkmframework.jpa.querydao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.platkmframework.common.domain.filter.FilterResult;
 import org.platkmframework.common.domain.filter.criteria.DeleteCriteria;
 import org.platkmframework.common.domain.filter.criteria.SearchCriteria;
 import org.platkmframework.database.query.QueryDao;
 import org.platkmframework.database.query.common.exception.DaoException;
-import org.platkmframework.jpa.base.PlatkmEntityManager;
+import org.platkmframework.jpa.base.PlatkmORMEntityManager;
 import org.platkmframework.jpa.exception.DatabaseValidationException;
 import org.platkmframework.jpa.processor.ProcessResult;
-import org.platkmframework.jpa.processor.SqlSentencesProcessor; 
+import org.platkmframework.jpa.processor.SqlSentencesProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import jakarta.persistence.Query; 
 
 /**
  *   Author: 
@@ -42,13 +42,13 @@ import org.platkmframework.jpa.processor.SqlSentencesProcessor;
  **/
 public final class QueryDaoImpl implements QueryDao{
 	 
-	private static final Logger logger = LogManager.getLogger(QueryDaoImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(QueryDaoImpl.class);
 
 	protected SqlSentencesProcessor  sqlSentencesProcessor;
 	
-	protected PlatkmEntityManager  entyEntityManager;
+	protected PlatkmORMEntityManager  entyEntityManager;
 
-	public QueryDaoImpl(PlatkmEntityManager entyEntityManager, SqlSentencesProcessor sqlSentencesProcessor) {
+	public QueryDaoImpl(PlatkmORMEntityManager entyEntityManager, SqlSentencesProcessor sqlSentencesProcessor) {
 		super();
 		this.entyEntityManager = entyEntityManager;
 		this.sqlSentencesProcessor = sqlSentencesProcessor;
@@ -75,7 +75,7 @@ public final class QueryDaoImpl implements QueryDao{
 			return query.getResultList();
 			
   		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("usuario y/o contrase�a incorrecta");
 		} 
 	}
@@ -102,7 +102,7 @@ public final class QueryDaoImpl implements QueryDao{
 			return (F) query.getSingleResult();
 			
   		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("usuario y/o contrase�a incorrecta");
 		} 
 	}
@@ -124,7 +124,7 @@ public final class QueryDaoImpl implements QueryDao{
 			return query.getSingleResult();
 			
   		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("usuario y/o contrase�a incorrecta");
 		} 
 	}
@@ -150,7 +150,7 @@ public final class QueryDaoImpl implements QueryDao{
 			return query.getResultList();
 			
   		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("usuario y/o contrase�a incorrecta");
 		} 
 	}
@@ -168,7 +168,7 @@ public final class QueryDaoImpl implements QueryDao{
 			return query.executeUpdate();
 			
 		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("No se pudo realizar la operaci�n, int�ntelo m�s tarde");
 		}
 	}
@@ -195,7 +195,7 @@ public final class QueryDaoImpl implements QueryDao{
 			return filterResult;  
 			
 		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("No se pudo realizar la operaci�n, int�ntelo m�s tarde");
 		}
 	}

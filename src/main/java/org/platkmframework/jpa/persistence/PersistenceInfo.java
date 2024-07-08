@@ -1,4 +1,4 @@
-package org.platkmframework.jpa.persistence.reader;
+package org.platkmframework.jpa.persistence;
 
 import java.util.HashMap;
 import java.util.List;

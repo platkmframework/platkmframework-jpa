@@ -32,5 +32,6 @@ public interface JpaPropertyConstant {
 	public static final String ORG_PLATKMFRAMEWORK_DATABASE_QUERYMANAGERS_PATH	= "org.platkmframework.database.querymanagers.path";
 	
 	public static final String ORG_PLATKMFRAMEWORK_JPA_SHOW_SQL    	            = "org.platkmframework.jpa.show.sql";
+	public static final String ORG_PLATKMFRAMEWORK_JPA_MAPPER_CLASS	            = "org.platkmframework.jpa.mapper.class";
 
 }

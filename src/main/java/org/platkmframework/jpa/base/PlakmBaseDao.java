@@ -27,11 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import org.apache.commons.lang3.StringUtils;
 import org.platkmframework.annotation.db.SystemColumn;
 import org.platkmframework.annotation.db.SystemColumnAction;
@@ -48,7 +43,12 @@ import org.platkmframework.jpa.exception.DatabaseValidationException;
 import org.platkmframework.jpa.persistence.PersistenceUnit;
 import org.platkmframework.jpa.util.DaoUtil;
 import org.platkmframework.util.error.InvocationException;
-import org.platkmframework.util.reflection.ReflectionUtil; 
+import org.platkmframework.util.reflection.ReflectionUtil;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id; 
 
 
 /**
@@ -195,7 +195,7 @@ public abstract class PlakmBaseDao {
  
 		List<Field> fields = ReflectionUtil.getAllFieldHeritage(customEntityBase.getClass()); 
 		for (Field field : fields) { 
-			if(field.isAnnotationPresent(javax.persistence.Id.class)) {  
+			if(field.isAnnotationPresent(Id.class)) {  
 				return ReflectionUtil.getAttributeValue(customEntityBase, field); 
 			}  
 		} 

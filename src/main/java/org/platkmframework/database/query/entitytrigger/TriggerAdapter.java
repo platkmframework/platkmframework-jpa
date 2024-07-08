@@ -16,9 +16,9 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
+package org.platkmframework.database.query.entitytrigger;
 
-import jakarta.persistence.Query;
+import org.platkmframework.database.query.common.exception.DaoException;
 
 /**
  *   Author: 
@@ -26,10 +26,18 @@ import jakarta.persistence.Query;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
+public class TriggerAdapter<E>{
 
-	int getPage();
+	public TriggerAdapter(){}
+	   
+	public void beforeInsert(E entity)throws DaoException {}
+	public void afterInsert(E entity)throws DaoException {}
+	
+	public void beforeUpdate(E entity)throws DaoException {}
+	public void afterUpdate(E entity)throws DaoException {}
+	
+	public void beforeDelete(E entity)throws DaoException {}
+	public void afterDelete(E entity)throws DaoException {}
 
-	long getPageCount();
 
 }

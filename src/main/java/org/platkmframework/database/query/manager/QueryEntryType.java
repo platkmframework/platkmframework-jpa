@@ -16,9 +16,8 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
+package org.platkmframework.database.query.manager;
 
-import jakarta.persistence.Query;
 
 /**
  *   Author: 
@@ -26,10 +25,8 @@ import jakarta.persistence.Query;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
-
-	int getPage();
-
-	long getPageCount();
+public enum QueryEntryType {
+	
+	select, execute, delete, update
 
 }

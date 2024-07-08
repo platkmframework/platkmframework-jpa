@@ -18,14 +18,13 @@
  *******************************************************************************/
 package org.platkmframework.jpa.persistence;
    
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.spi.PersistenceProvider;
-import javax.persistence.spi.PersistenceUnitInfo;
-import javax.persistence.spi.ProviderUtil;
- 
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.spi.PersistenceProvider;
+import jakarta.persistence.spi.PersistenceUnitInfo;
+import jakarta.persistence.spi.ProviderUtil;
+
 /**
  *   Author: 
  *     Eduardo Iglesias
@@ -36,10 +35,9 @@ public abstract class PlatkmPersistenceProvider implements PersistenceProvider{
 	
 	private PlakmProviderUtil plakmProviderUtil;
 	
-	protected static Map<String, PlatkmEntityManagerFactory > mapFactory = new HashMap<>(); 
 	protected boolean loaded;
 	
-	public PlatkmPersistenceProvider() {
+	protected PlatkmPersistenceProvider() {
 		super(); 
 		plakmProviderUtil = new PlakmProviderUtil();  
 	}
@@ -64,17 +62,12 @@ public abstract class PlatkmPersistenceProvider implements PersistenceProvider{
 		return getEntityManagerFactory(persistenceUnitName, map).getSchemaGenerator().generateSchema( map); 
 	}
 
-	public PlatkmEntityManagerFactory getEntityManagerFactory(String persistenceUnitName, Map map) 
+	private PlatkmEntityManagerFactory getEntityManagerFactory(String persistenceUnitName, Map map) 
 	{  
-		
-		if(!loaded){
-			createPlakmEntityManagerFactory(persistenceUnitName,map);
-			loaded = true;
-		}
-		return mapFactory.get(persistenceUnitName);  
+		return createPlakmEntityManagerFactory(persistenceUnitName,map);
 	}
 	
-	protected abstract void createPlakmEntityManagerFactory(String persistenceUnitName, Map map);
+	protected abstract PlatkmEntityManagerFactory createPlakmEntityManagerFactory(String persistenceUnitName, Map map);
 	
 	@Override
 	public ProviderUtil getProviderUtil() {

@@ -26,7 +26,7 @@ import org.platkmframework.common.domain.filter.criteria.WhereCriteria;
 import org.platkmframework.common.domain.filter.criteria.base.ConditionFilterBase;
 import org.platkmframework.database.query.common.vo.CustomResultInfo;
 import org.platkmframework.database.query.manager.model.QuerySelect;
-import org.platkmframework.jpa.base.PlatkmEntityManager;
+import org.platkmframework.jpa.base.PlatkmORMEntityManager;
 import org.platkmframework.jpa.exception.DatabaseValidationException; 
 
 
@@ -38,18 +38,18 @@ import org.platkmframework.jpa.exception.DatabaseValidationException;
  **/
 public interface SqlSentencesProcessor {
 	
-	public ProcessResult process(PlatkmEntityManager platkmEntityManager, ConditionFilterBase filterCriteria, List<Object> param) throws DatabaseValidationException;
+	public ProcessResult process(PlatkmORMEntityManager platkmEntityManager, ConditionFilterBase filterCriteria, List<Object> param) throws DatabaseValidationException;
 
-	public ProcessResult process(PlatkmEntityManager platkmEntityManager, QuerySelect querySelect, WhereCriteria whereCriteria, List<Object> param, String... replacements) throws DatabaseValidationException;
+	public ProcessResult process(PlatkmORMEntityManager PlatkmORMEntityManager, QuerySelect querySelect, WhereCriteria whereCriteria, List<Object> param, String... replacements) throws DatabaseValidationException;
 
-	public ProcessResult process(PlatkmEntityManager platkmEntityManager, String sql, SearchCriteria searchCriteria) throws DatabaseValidationException;
+	public ProcessResult process(PlatkmORMEntityManager PlatkmORMEntityManager, String sql, SearchCriteria searchCriteria) throws DatabaseValidationException;
 
-	public ProcessResult removeProcess(PlatkmEntityManager platkmEntityManager, DeleteCriteria deleteCriteria,List<Object> param)throws DatabaseValidationException;
+	public ProcessResult removeProcess(PlatkmORMEntityManager PlatkmORMEntityManager, DeleteCriteria deleteCriteria,List<Object> param)throws DatabaseValidationException;
 
-	public ProcessResult process(PlatkmEntityManager  entyEntityManager, QuerySelect querySelect, WhereCriteria filter,
+	public ProcessResult process(PlatkmORMEntityManager  entyEntityManager, QuerySelect querySelect, WhereCriteria filter,
 			List<Object> parameters, CustomResultInfo<?> customResultInfo, String[] replacements)throws DatabaseValidationException; 
 	
-/**	public ProcessResult processSelectOptions(PlatkmEntityManager entyEntityManager, QuerySelect querySelect,
+/**	public ProcessResult processSelectOptions(PlatkmORMEntityManager entyEntityManager, QuerySelect querySelect,
 			String tableName, String keyColumn, String textColumns, WhereCriteria filter) throws DatabaseValidationException;
 */
 }

@@ -18,7 +18,17 @@
  *******************************************************************************/
 package org.platkmframework.jpa.base;
 
-import jakarta.persistence.Query;
+import java.util.List;
+
+import org.platkmframework.database.query.QueryDao;
+import org.platkmframework.database.query.QueryManagerDao;
+import org.platkmframework.database.query.manager.QueryManager;
+import org.platkmframework.databasereader.model.Column;
+import org.platkmframework.databasereader.model.Table;
+import org.platkmframework.jpa.mapping.DatabaseMapper;
+
+import jakarta.persistence.EntityManager; 
+
 
 /**
  *   Author: 
@@ -26,10 +36,20 @@ import jakarta.persistence.Query;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
-
-	int getPage();
-
-	long getPageCount();
-
+public interface PlatkmORMEntityManager extends EntityManager, PlatkmEntityManager{
+	
+	public QueryDao getQueryDao();
+	
+	public QueryManagerDao getQueryManagerDao();
+	
+	public QueryManager getQueryManager();
+	
+	public DatabaseMapper getDatabaseMapper();
+	
+	List<Table> getMetadata();
+	
+	List<Column> getTableColumnMetaData(String tablename);
+	
+	List<String> getTablePksContraints(String tableName); 
+	
 }

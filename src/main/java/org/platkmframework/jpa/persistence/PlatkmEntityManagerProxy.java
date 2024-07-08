@@ -20,20 +20,20 @@ package org.platkmframework.jpa.persistence;
 
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.EntityGraph;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.FlushModeType;
-import javax.persistence.LockModeType;
-import javax.persistence.Query;
-import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.metamodel.Metamodel;
+ 
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.FlushModeType;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.Query;
+import jakarta.persistence.StoredProcedureQuery; 
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaDelete;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.CriteriaUpdate;
+import jakarta.persistence.metamodel.Metamodel;
 
 import org.platkmframework.common.domain.filter.criteria.DeleteCriteria;
 import org.platkmframework.common.domain.filter.criteria.FilterCriteria;
@@ -43,7 +43,7 @@ import org.platkmframework.database.query.common.ColumnInfoValue;
 import org.platkmframework.database.query.manager.QueryManager;
 import org.platkmframework.databasereader.model.Column;
 import org.platkmframework.databasereader.model.Table;
-import org.platkmframework.jpa.base.PlatkmEntityManager;
+import org.platkmframework.jpa.base.PlatkmORMEntityManager;
 import org.platkmframework.jpa.base.PlatkmQuery;
 import org.platkmframework.jpa.exception.DatabaseValidationException;
 import org.platkmframework.jpa.mapping.DatabaseMapper;
@@ -55,7 +55,7 @@ import org.platkmframework.jpa.mapping.DatabaseMapper;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public class PlatkmEntityManagerProxy implements PlatkmEntityManager {
+public class PlatkmEntityManagerProxy implements PlatkmORMEntityManager {
     
 	private String persistenceUnitName;
 	
@@ -362,16 +362,16 @@ public class PlatkmEntityManagerProxy implements PlatkmEntityManager {
 
 
 	@Override
-	public ColumnInfoValue insertSQL(String tableName, List<ColumnInfoValue> columns)
+	public ColumnInfoValue insert(String tableName, List<ColumnInfoValue> columns)
 			throws DatabaseValidationException { 
-		return PersistenceManager.instance().get(persistenceUnitName).insertSQL(tableName, columns);
+		return PersistenceManager.instance().get(persistenceUnitName).insert(tableName, columns);
 	}
 
 
 	@Override
-	public void updateSQL(String tablename, List<ColumnInfoValue> columns)
+	public void update(String tablename, List<ColumnInfoValue> columns)
 			throws    DatabaseValidationException {
-		PersistenceManager.instance().get(persistenceUnitName).updateSQL(tablename, columns);
+		PersistenceManager.instance().get(persistenceUnitName).update(tablename, columns);
 		
 	}
 

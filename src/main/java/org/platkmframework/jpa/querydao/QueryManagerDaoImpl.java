@@ -20,10 +20,8 @@ package org.platkmframework.jpa.querydao;
        
 import java.util.List;
 
-import javax.persistence.Query;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.platkmframework.common.domain.filter.FilterResult;
 import org.platkmframework.common.domain.filter.criteria.WhereCriteria;
 import org.platkmframework.database.query.QueryManagerDao;
@@ -31,11 +29,12 @@ import org.platkmframework.database.query.common.exception.DaoException;
 import org.platkmframework.database.query.common.vo.CustomResultInfo;
 import org.platkmframework.database.query.manager.QueryManager;
 import org.platkmframework.database.query.manager.model.QuerySelect;
-import org.platkmframework.jpa.base.PlatkmEntityManager;
+import org.platkmframework.jpa.base.PlatkmORMEntityManager;
 import org.platkmframework.jpa.exception.DatabaseValidationException;
-import org.platkmframework.jpa.mapping.DatabaseMapper;
 import org.platkmframework.jpa.processor.ProcessResult;
 import org.platkmframework.jpa.processor.SqlSentencesProcessor;
+
+import jakarta.persistence.Query;
 
 /**
  *   Author: 
@@ -45,15 +44,15 @@ import org.platkmframework.jpa.processor.SqlSentencesProcessor;
  **/
 public class QueryManagerDaoImpl implements QueryManagerDao{
 	
-	private static final Logger logger = LogManager.getLogger(QueryManagerDaoImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(QueryManagerDaoImpl.class);
  
 	protected SqlSentencesProcessor sqlSentencesProcessor;
 	
-	protected PlatkmEntityManager entyEntityManager;
+	protected PlatkmORMEntityManager entyEntityManager;
 	
 	protected QueryManager queryManager;
 
-	public QueryManagerDaoImpl(PlatkmEntityManager entyEntityManager, SqlSentencesProcessor sqlSentencesProcessor, QueryManager queryManager) {
+	public QueryManagerDaoImpl(PlatkmORMEntityManager entyEntityManager, SqlSentencesProcessor sqlSentencesProcessor, QueryManager queryManager) {
 		super();
 		this.entyEntityManager = entyEntityManager;
 		this.sqlSentencesProcessor = sqlSentencesProcessor;
@@ -91,7 +90,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			return filterResult;
 			
 		} catch (Exception e) {
-			logger.error(e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("No se pudo realizar el proceso, int�ntelo m�s tarde");
 		} 
 	}
@@ -138,7 +137,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			
 			
   		} catch (DatabaseValidationException e) {
-			logger.error(e); 
+			logger.error(e.getMessage());  
 			throw new DaoException("error en el proceso, int�ntelo m�s tarde");
 		} 
 	}
@@ -182,7 +181,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			query.executeUpdate(); 
 			
   		} catch (DatabaseValidationException e) {
-			logger.error(e); 
+			logger.error(e.getMessage());  
 			throw new DaoException("error en el proceso, int�ntelo m�s tarde");
 		} 
 	}
@@ -222,7 +221,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			query.executeUpdate();
 			 
   		} catch (DatabaseValidationException e) {
-			logger.error(e); 
+			logger.error(e.getMessage());  
 			throw new DaoException("error en el proceso, int�ntelo m�s tarde");
 		} 
 		
@@ -264,7 +263,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			return (F) query.getSingleResult();
 		
 		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("error en el proceso, int�ntelo m�s tarde");
 		} 
 	}
@@ -297,7 +296,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			return query.getSingleResult();
 		
 		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("error en el proceso, int�ntelo m�s tarde");
 		} 
 	}
@@ -337,7 +336,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			return query.getResultList();
 		
 		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("error en el proceso, int�ntelo m�s tarde");
 		} 
 	} 
@@ -369,7 +368,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			return query.getResultList();
 		
 		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("error en el proceso, int�ntelo m�s tarde");
 		} 
 	}
@@ -402,7 +401,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			return query.getResultList();
 		
 		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("error en el proceso, int�ntelo m�s tarde");
 		} 
 	}
@@ -432,7 +431,7 @@ public class QueryManagerDaoImpl implements QueryManagerDao{
 			return query.getResultList();
 	
 		} catch (DatabaseValidationException e) {
-			logger.error(e,e); 
+			logger.error(e.getMessage()); 
 			throw new DaoException("error en el proceso, int�ntelo m�s tarde");
 		} 
 	}

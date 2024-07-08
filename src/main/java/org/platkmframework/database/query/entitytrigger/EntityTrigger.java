@@ -16,9 +16,13 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
+package org.platkmframework.database.query.entitytrigger;
 
-import jakarta.persistence.Query;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target; 
+
 
 /**
  *   Author: 
@@ -26,10 +30,10 @@ import jakarta.persistence.Query;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
-
-	int getPage();
-
-	long getPageCount();
-
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE) //on class level
+public @interface EntityTrigger {
+   
+	Class<?> entity();
+	 
 }

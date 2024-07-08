@@ -16,20 +16,18 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
-
-import jakarta.persistence.Query;
-
+package org.platkmframework.jpa.converter;
+ 
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter; 
+  
 /**
  *   Author: 
  *     Eduardo Iglesias
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
-
-	int getPage();
-
-	long getPageCount();
+@Converter(autoApply = true)
+public interface BaseConverter  extends AttributeConverter<Object , Object> {
 
 }

@@ -20,14 +20,14 @@ package org.platkmframework.jpa.processor;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.persistence.Query;
-
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.platkmframework.common.domain.filter.criteria.SearchCriteria;
 import org.platkmframework.common.domain.filter.criteria.WhereCriteria;
 import org.platkmframework.common.domain.filter.criteria.base.ConditionFilterBase;
@@ -39,11 +39,13 @@ import org.platkmframework.common.domain.filter.info.FilterDataType;
 import org.platkmframework.database.query.common.vo.CustomResultInfo;
 import org.platkmframework.database.query.manager.model.QuerySelect;
 import org.platkmframework.database.query.manager.model.QuerySyntax;
-import org.platkmframework.jpa.base.PlatkmEntityManager;
+import org.platkmframework.jpa.base.PlatkmORMEntityManager;
 import org.platkmframework.jpa.exception.DatabaseValidationException;
 import org.platkmframework.jpa.mapping.JpaPropertyConstant;
 import org.platkmframework.jpa.util.DaoUtil;
 import org.platkmframework.util.Util;
+
+import jakarta.persistence.Query;
  
 
 
@@ -59,10 +61,10 @@ public abstract class SqlSentencesProcessorBase implements SqlSentencesProcessor
 	public static final String C_POSTGRESQL = "postgresql";
 	 
 
-	private static final Logger logger = LogManager.getLogger(SqlSentencesProcessorBase.class);
+	private static Logger logger = LoggerFactory.getLogger(SqlSentencesProcessorBase.class);
  
 	@Override   
-	public ProcessResult process(PlatkmEntityManager platkmEntityManager,  ConditionFilterBase filter, List<Object> param) throws DatabaseValidationException { 
+	public ProcessResult process(PlatkmORMEntityManager platkmEntityManager,  ConditionFilterBase filter, List<Object> param) throws DatabaseValidationException { 
 		List<Object> parameters = cloneList(param);
 	   
 		ProcessResult processResult = processCriteria(platkmEntityManager, filter.getSql(), parameters);
@@ -119,11 +121,11 @@ public abstract class SqlSentencesProcessorBase implements SqlSentencesProcessor
 	}
 	
 	@Override
-	public ProcessResult process(PlatkmEntityManager  platkmEntityManager, QuerySelect querySelect, WhereCriteria whereCriteria, List<Object> param, String... replacements) throws DatabaseValidationException {
+	public ProcessResult process(PlatkmORMEntityManager  platkmEntityManager, QuerySelect querySelect, WhereCriteria whereCriteria, List<Object> param, String... replacements) throws DatabaseValidationException {
 		return process(platkmEntityManager, null, querySelect, whereCriteria, param, replacements);
 	}
 
-	protected ProcessResult process(PlatkmEntityManager platkmEntityManager, String customSelect, QuerySelect querySelect, WhereCriteria whereCriteria, List<Object> param, String... replacements) throws DatabaseValidationException {
+	protected ProcessResult process(PlatkmORMEntityManager platkmEntityManager, String customSelect, QuerySelect querySelect, WhereCriteria whereCriteria, List<Object> param, String... replacements) throws DatabaseValidationException {
 		
 		List<Object> parameters = cloneList(param); 
 	    StringBuilder sb = new StringBuilder();  
@@ -234,14 +236,14 @@ public abstract class SqlSentencesProcessorBase implements SqlSentencesProcessor
 	
 	
 	@Override
-	public ProcessResult process(PlatkmEntityManager  entyEntityManager, QuerySelect querySelect, WhereCriteria filter,
+	public ProcessResult process(PlatkmORMEntityManager  entyEntityManager, QuerySelect querySelect, WhereCriteria filter,
 			List<Object> parameters, CustomResultInfo<?> customResultInfo, String[] replacements) throws DatabaseValidationException {
 		
 		return process(entyEntityManager,  "SELECT " +  String.join(",", customResultInfo.getColumns()), querySelect, filter, parameters, replacements);
 	}
 	
 	
-	protected Integer processOffsetRecordCount(String sql, PlatkmEntityManager  platkmEntityManager, List<Object> parameters){
+	protected Integer processOffsetRecordCount(String sql, PlatkmORMEntityManager  platkmEntityManager, List<Object> parameters){
 		
 		String sqlCount = "SELECT count('x') as cantidad FROM (" + sql  + " ) AS vwSelect";
          
@@ -258,7 +260,7 @@ public abstract class SqlSentencesProcessorBase implements SqlSentencesProcessor
 	}
  
  
-	protected String processOffset(ProcessResult processResult, String sql, PlatkmEntityManager platkmEntityManager, List<Object> parameters) {
+	protected String processOffset(ProcessResult processResult, String sql, PlatkmORMEntityManager platkmEntityManager, List<Object> parameters) {
 		
 		int pageCount = 0;
         int page = 0;
@@ -310,12 +312,12 @@ public abstract class SqlSentencesProcessorBase implements SqlSentencesProcessor
 	}
 	
 	@Override 
-	public ProcessResult process(PlatkmEntityManager  platkmEntityManager, String sql, SearchCriteria searchCriteria) throws DatabaseValidationException {
+	public ProcessResult process(PlatkmORMEntityManager  platkmEntityManager, String sql, SearchCriteria searchCriteria) throws DatabaseValidationException {
 		// TODO REPORT
 	  throw new UnsupportedOperationException();
 	}
 
-	protected ProcessResult processCriteria(PlatkmEntityManager  platkmEntityManager,List<FilterData> filterList, List<Object> parameters) throws DatabaseValidationException{
+	protected ProcessResult processCriteria(PlatkmORMEntityManager  platkmEntityManager,List<FilterData> filterList, List<Object> parameters) throws DatabaseValidationException{
 		
 		ProcessResult processResult = new ProcessResult();
 		processResult.setParameters(parameters);
@@ -416,7 +418,8 @@ public abstract class SqlSentencesProcessorBase implements SqlSentencesProcessor
 	protected String process(String sql, String[] args, List<Object> param) throws DatabaseValidationException {
 	
         //checking ${key}, the args are key=value
-		sql = checkingArgs(sql, args);
+		String auxSQL = checkingArgs(sql, args);
+		Map<String, String> indexInMap = new HashMap<>();
  
         //update sql sentences whit filter 
 		//sql = updateSqlSentencesForFilter(sql, param, filter);
@@ -429,26 +432,33 @@ public abstract class SqlSentencesProcessorBase implements SqlSentencesProcessor
         	Object value;
         	List<?> list;
         	List<Object> auxParam = new ArrayList<>();
-        	auxParam.addAll(param);
-        	for (int i = 0; i < auxParam.size(); i++) {
-				value = auxParam.get(i);
+        	//auxParam.addAll(param);
+        	for (int i = 0; i < param.size(); i++) {
+				value = param.get(i);
 				list = checkForList(value);
 				if(list != null) {
 					if(list.isEmpty())
 						throw new DatabaseValidationException("the list parameter is empty in the search process");
-					int j = i; 
-					for (Object object : list) {
+					//int j = i; 
+					auxParam.addAll(list);
+					/*for (Object object : list) {
 						param.add(j, object);
 						j++;
 					}
-					param.remove(j); 
-					sql = updateSqlSentencesForListParameter(sql, i, list); 
+					param.add(j); */
+					auxSQL = updateSqlSentencesForListParameter(auxSQL, (i+1-indexInMap.size()), list.size(), indexInMap);  
+	        	}else {
+	        		auxParam.add(value);
 	        	}
         	}
-        	 
+        	param.clear();
+        	param.addAll(auxParam);
+        	
+        	for (var entry : indexInMap.entrySet()) {
+        		auxSQL = auxSQL.replace(entry.getKey(),  entry.getValue());
+        	}
         }
-        
-        return sql; 
+        return auxSQL; 
 	}
 	 
 	protected String checkingArgs(String sql, String[] args) {
@@ -463,23 +473,18 @@ public abstract class SqlSentencesProcessorBase implements SqlSentencesProcessor
         return sql; 
 	}
 
-	private String updateSqlSentencesForListParameter(String sql, int paramIndex, List<?> list) throws DatabaseValidationException {
-		// search the i occurrences of ? in sql
-		int index = 0;
-		int signalPos = 0;
-		String sqlAux = sql;
-		while (index <= paramIndex) { 
-			signalPos = sqlAux.indexOf("?");
-			sqlAux = sqlAux.substring(0, signalPos+1);
-			sqlAux = sqlAux.replace("?","x");
-			sqlAux = sqlAux.substring(0, signalPos+1) + sql.substring(signalPos+1);
-			index++;
-		}
-		if(index <0) 
-			throw new DatabaseValidationException("the index for list was not found");
-		
-		
-		return sql.substring(0, signalPos) +  DaoUtil._valoresIN(list) + sql.substring(signalPos+1);  
+	private String updateSqlSentencesForListParameter(String sql, int paramIndex, int arrayParamCount, Map<String, String> indexInMap) throws DatabaseValidationException {
+		int index = theNthOcurrency(sql, paramIndex);
+		indexInMap.put("#paramlist_" + paramIndex, ",?".repeat(arrayParamCount).substring(1));
+		return sql.substring(0, index) +  ("#paramlist_" + paramIndex) + sql.substring(index+1);  
+	}
+	
+	private int theNthOcurrency(String sql, int nth) {
+	    if (nth <= 1) {
+	        return sql.indexOf("?");
+	    } else {
+	        return sql.indexOf("?", theNthOcurrency(sql, nth - 1) + "?".length());
+	    }
 	}
  
 

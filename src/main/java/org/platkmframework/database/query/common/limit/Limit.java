@@ -16,9 +16,7 @@
  * Contributors:
  * 	Eduardo Iglesias Taylor - initial API and implementation
  *******************************************************************************/
-package org.platkmframework.jpa.base;
-
-import jakarta.persistence.Query;
+package org.platkmframework.database.query.common.limit;
 
 /**
  *   Author: 
@@ -26,10 +24,8 @@ import jakarta.persistence.Query;
  *   Contributors: 
  *   	Eduardo Iglesias - initial API and implementation
  **/
-public interface PlatkmQuery extends Query {
-
-	int getPage();
-
-	long getPageCount();
+public interface Limit {
+	
+	boolean check(Object obj) throws ApplicationLimitException;
 
 }

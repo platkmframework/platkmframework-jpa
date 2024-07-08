@@ -18,8 +18,7 @@
  *******************************************************************************/
 package org.platkmframework.jpa.base;
 
-import javax.persistence.Parameter;
-
+import jakarta.persistence.Parameter;
 
 /**
  *   Author: 
