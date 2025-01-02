@@ -1,60 +1,92 @@
-/*******************************************************************************
- * Copyright(c) 2023 the original author Eduardo Iglesias Taylor.
+/**
+ * ****************************************************************************
+ *  Copyright(c) 2023 the original author Eduardo Iglesias Taylor.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * 	 https://www.apache.org/licenses/LICENSE-2.0
+ *  	 https://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  *
- * Contributors:
- * 	Eduardo Iglesias Taylor - initial API and implementation
- *******************************************************************************/
+ *  Contributors:
+ *  	Eduardo Iglesias Taylor - initial API and implementation
+ * *****************************************************************************
+ */
 package org.platkmframework.database.query.common;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- *   Author: 
+ *   Author:
  *     Eduardo Iglesias
- *   Contributors: 
+ *   Contributors:
  *   	Eduardo Iglesias - initial API and implementation
- **/
+ */
 public class Result implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	List<String> columns;
-	private List<Object[]> list;
-	
-	
-	public List<String> getColumns() {
-		return columns;
-	}
-	public void setColumns(List<String> columns) {
-		if(columns == null) columns = new ArrayList<>();
-		this.columns = columns;
-	}
-	public List<Object[]> getList() {
-		if(list == null) list = new ArrayList<>();
-		return list;
-	}
-	public void setList(List<Object[]> list) {
-		this.list = list;
-	}
-	
- 
 
+    /**
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Atributo columns
+     */
+    List<String> columns;
+
+    /**
+     * Atributo list
+     */
+    private List<Object[]> list;
+
+    
+    /**
+     * Result
+     */
+    public Result() {
+		super();
+	}
+
+	/**
+     * getColumns
+     * @return List
+     */
+    public List<String> getColumns() {
+        return columns;
+    }
+
+    /**
+     * setColumns
+     * @param columns columns
+     */
+    public void setColumns(List<String> columns) {
+        if (columns == null)
+            columns = new ArrayList<>();
+        this.columns = columns;
+    }
+
+    /**
+     * getList
+     * @return List
+     */
+    public List<Object[]> getList() {
+        if (list == null)
+            list = new ArrayList<>();
+        return list;
+    }
+
+    /**
+     * setList
+     * @param list list
+     */
+    public void setList(List<Object[]> list) {
+        this.list = list;
+    }
 }

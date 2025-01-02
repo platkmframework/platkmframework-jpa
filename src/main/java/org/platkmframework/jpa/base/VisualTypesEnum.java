@@ -1,56 +1,159 @@
-/*******************************************************************************
- * Copyright(c) 2023 the original author Eduardo Iglesias Taylor.
+/**
+ * ****************************************************************************
+ *  Copyright(c) 2023 the original author Eduardo Iglesias Taylor.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * 	 https://www.apache.org/licenses/LICENSE-2.0
+ *  	 https://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  *
- * Contributors:
- * 	Eduardo Iglesias Taylor - initial API and implementation
- *******************************************************************************/
+ *  Contributors:
+ *  	Eduardo Iglesias Taylor - initial API and implementation
+ * *****************************************************************************
+ */
 package org.platkmframework.jpa.base;
 
-
 /**
- *   Author: 
+ *   Author:
  *     Eduardo Iglesias
- *   Contributors: 
+ *   Contributors:
  *   	Eduardo Iglesias - initial API and implementation
- **/
+ */
 public enum VisualTypesEnum {
-	
-	text,
-	textarea,
-	float_number,
-	decimal_number,
-	double_number, 
-	date_no_time_format,
-	date_time_format,
-	time_format,
-	short_number,
-	int_number,
-	longinteger_number,
-	condition,
-	money_format,
-	email, 
-	location,
-	phone,
-	valtab,
-	relation,
-	direccion,
-	image,
-	password,
-	username,
-	WYSIWYG,
-	video,
-	simple_contact,
-	bpmn
+
+	/**
+	 * text
+	 */
+    text,
+
+	/**
+	 * textarea
+	 */
+    textarea,
+
+	/**
+	 * float_number
+	 */
+    float_number,
+
+	/**
+	 * decimal_number
+	 */
+    decimal_number,
+
+	/**
+	 * double_number
+	 */
+    double_number,
+
+	/**
+	 * date_no_time_format
+	 */
+    date_no_time_format,
+
+	/**
+	 * date_time_format
+	 */
+    date_time_format,
+
+	/**
+	 * time_format
+	 */
+    time_format,
+
+	/**
+	 * short_number
+	 */
+    short_number,
+
+	/**
+	 * int_number
+	 */
+    int_number,
+
+	/**
+	 * longinteger_number
+	 */
+    longinteger_number,
+    
+	/**
+	 * condition
+	 */
+    condition,
+    
+	/**
+	 * money_format
+	 */
+    money_format,
+
+	/**
+	 * email
+	 */
+    email,
+
+	/**
+	 * location
+	 */
+    location,
+
+	/**
+	 * phone
+	 */
+    phone,
+
+	/**
+	 * valtab
+	 */
+    valtab,
+
+	/**
+	 * V
+	 */
+    relation,
+	/**
+	 * direccion
+	 */
+    direccion,
+
+	/**
+	 * image
+	 */
+    image,
+    
+	/**
+	 * password
+	 */
+    password,
+
+	/**
+	 * username
+	 */
+    username,
+
+	/**
+	 * WYSIWYG
+	 */
+    WYSIWYG,
+
+	/**
+	 * video
+	 */
+    video,
+
+	/**
+	 * simple_contact
+	 */
+    simple_contact,
+
+	/**
+	 * bpmn
+	 */
+    bpmn
 }

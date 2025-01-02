@@ -1,174 +1,340 @@
-/*******************************************************************************
- * Copyright(c) 2023 the original author Eduardo Iglesias Taylor.
+/**
+ * ****************************************************************************
+ *  Copyright(c) 2023 the original author Eduardo Iglesias Taylor.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * 	 https://www.apache.org/licenses/LICENSE-2.0
+ *  	 https://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  *
- * Contributors:
- * 	Eduardo Iglesias Taylor - initial API and implementation
- *******************************************************************************/
+ *  Contributors:
+ *  	Eduardo Iglesias Taylor - initial API and implementation
+ * *****************************************************************************
+ */
 package org.platkmframework.jpa.processor;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
-import org.platkmframework.common.domain.filter.info.FilterData; 
-
+import org.platkmframework.persistence.filter.info.FilterData;
 
 /**
- *   Author: 
+ *   Author:
  *     Eduardo Iglesias
- *   Contributors: 
+ *   Contributors:
  *   	Eduardo Iglesias - initial API and implementation
- **/
+ */
 public class ProcessResult {
-	 
-	private List<Object> parameters; 
-	private int page;
-	private int pageCount;
-	
-	private FilterData fastSearchInfo;
-	private FilterData havingInfo;
-	private String addtionalDataInfo= "";
-	private FilterData offSetInfo;
-	private List<FilterData> orderBy; 
-	private String groupBy= ""; 
-	private Boolean withWhere;
-	private String sql = "";
-	
-	StringBuilder sb = new StringBuilder(); 
-	 
-	public ProcessResult() {
-		super();
-	}
 
-	public ProcessResult( List<Object> parameters, int page, int pageCount) {
-		 
-		 this.parameters = parameters;
-		 this.page = page;
-		 this.pageCount = pageCount;
-	}
-	 
-	public void addSQL(String value) {
-		sb.append(value);
-	}
-	public void addGroupBy(FilterData ob) {
-		groupBy = ob.getGroupColumns(); 
-	}
+    /**
+     * Atributo parameters
+     */
+    private List<Object> parameters;
 
-	public void addAdditionalInfo(FilterData ob) {
-		addtionalDataInfo = ob.getGroupColumns(); 
-		
-	}
+    /**
+     * Atributo page
+     */
+    private int page;
 
-	public void addOrderBy(FilterData ob) {
-		getOrderBy().add(ob);
-	}
-	public List<Object> getParameters() {
-		return parameters;
-	}
-	public void setParameters(List<Object> parameters) {
-		this.parameters = parameters;
-	} 
-	public int getPage() {
-		return page;
-	}
+    /**
+     * Atributo pageCount
+     */
+    private int pageCount;
 
-	public void setPage(int page) {
-		this.page = page;
-	}
+    /**
+     * Atributo fastSearchInfo
+     */
+    private FilterData fastSearchInfo;
 
-	public int getPageCount() {
-		return pageCount;
-	}
+    /**
+     * Atributo havingInfo
+     */
+    private FilterData havingInfo;
 
-	public void setPageCount(int pageCount) {
-		this.pageCount = pageCount;
-	}
+    /**
+     * Atributo addtionalDataInfo
+     */
+    private String addtionalDataInfo = "";
 
-	public FilterData getFastSearchInfo() {
-		return fastSearchInfo;
-	}
+    /**
+     * Atributo offSetInfo
+     */
+    private FilterData offSetInfo;
 
-	public void setFastSearchInfo(FilterData fastSearchInfo) {
-		this.fastSearchInfo = fastSearchInfo;
-	}
+    /**
+     * Atributo orderBy
+     */
+    private List<FilterData> orderBy;
 
-	public String getAddtionalDataInfo() {
-		return addtionalDataInfo;
-	}
+    /**
+     * Atributo groupBy
+     */
+    private String groupBy = "";
 
-	public void setAddtionalDataInfo(String addtionalDataInfo) {
-		this.addtionalDataInfo = addtionalDataInfo;
-	}
+    /**
+     * Atributo withWhere
+     */
+    private Boolean withWhere;
 
-	public FilterData getOffSetInfo() {
-		return offSetInfo;
-	}
+    /**
+     * Atributo sql
+     */
+    private String sql = "";
 
-	public void setOffSetInfo(FilterData offSetInfo) {
-		this.offSetInfo = offSetInfo;
-	}
- 
-	public List<FilterData> getOrderBy() {
-		if(orderBy == null) orderBy = new ArrayList<>();
-		return orderBy;  
-	}
+    /**
+     * Atributo sb
+     */
+    StringBuilder sb = new StringBuilder();
 
-	public void setOrderBy(List<FilterData> orderBy) {
-		this.orderBy = orderBy;
-	}
+    /**
+     * Constructor ProcessResult
+     */
+    public ProcessResult() {
+        super();
+    }
 
-	public String getGroupBy() {
-		return groupBy;
-	}
+    /**
+     * Constructor ProcessResult
+     * @param parameters parameters
+     * @param page page
+     * @param pageCount pageCount
+     */
+    public ProcessResult(List<Object> parameters, int page, int pageCount) {
+        this.parameters = parameters;
+        this.page = page;
+        this.pageCount = pageCount;
+    }
 
-	public void setGroupBy(String groupBy) {
-		this.groupBy = groupBy;
-	}
+    /**
+     * addSQL
+     * @param value value
+     */
+    public void addSQL(String value) {
+        sb.append(value);
+    }
 
-	public Boolean getWithWhere() {
-		return withWhere;
-	}
+    /**
+     * addGroupBy
+     * @param ob ob
+     */
+    public void addGroupBy(FilterData ob) {
+        groupBy = ob.getGroupColumns();
+    }
 
-	public void setWithWhere(Boolean withWhere) {
-		this.withWhere = withWhere;
-	}
+    /**
+     * addAdditionalInfo
+     * @param ob ob
+     */
+    public void addAdditionalInfo(FilterData ob) {
+        addtionalDataInfo = ob.getGroupColumns();
+    }
 
-	public void setSql(String sql) {
-		this.sql = sql; 
-	}
+    /**
+     * addOrderBy
+     * @param ob ob
+     */
+    public void addOrderBy(FilterData ob) {
+        getOrderBy().add(ob);
+    }
 
-	public String getSql() {
-		return sql;
-	}
-	
-	public String getSbSQL() {
-		return sb.toString();
-	}
+    /**
+     * getParameters
+     * @return List
+     */
+    public List<Object> getParameters() {
+        return parameters;
+    }
 
-	public void addHavingInfo(FilterData havingInfo) {
-	 this.havingInfo = havingInfo;
-		
-	}
+    /**
+     * setParameters
+     * @param parameters parameters
+     */
+    public void setParameters(List<Object> parameters) {
+        this.parameters = parameters;
+    }
 
-	public FilterData getHavingInfo() {
-		return havingInfo;
-	}
+    /**
+     * getPage
+     * @return int
+     */
+    public int getPage() {
+        return page;
+    }
 
-	public String getHaving() { 
-		return havingInfo == null || StringUtils.isBlank(havingInfo.getHavingInfo())? "": " HAVING " + havingInfo.getHavingInfo();
-	}
- 
+    /**
+     * setPage
+     * @param page page
+     */
+    public void setPage(int page) {
+        this.page = page;
+    }
 
+    /**
+     * getPageCount
+     * @return int
+     */
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    /**
+     * setPageCount
+     * @param pageCount pageCount
+     */
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    /**
+     * getFastSearchInfo
+     * @return FilterData
+     */
+    public FilterData getFastSearchInfo() {
+        return fastSearchInfo;
+    }
+
+    /**
+     * setFastSearchInfo
+     * @param fastSearchInfo fastSearchInfo
+     */
+    public void setFastSearchInfo(FilterData fastSearchInfo) {
+        this.fastSearchInfo = fastSearchInfo;
+    }
+
+    /**
+     * getAddtionalDataInfo
+     * @return String
+     */
+    public String getAddtionalDataInfo() {
+        return addtionalDataInfo;
+    }
+
+    /**
+     * setAddtionalDataInfo
+     * @param addtionalDataInfo addtionalDataInfo
+     */
+    public void setAddtionalDataInfo(String addtionalDataInfo) {
+        this.addtionalDataInfo = addtionalDataInfo;
+    }
+
+    /**
+     * getOffSetInfo
+     * @return FilterData
+     */
+    public FilterData getOffSetInfo() {
+        return offSetInfo;
+    }
+
+    /**
+     * setOffSetInfo
+     * @param offSetInfo offSetInfo
+     */
+    public void setOffSetInfo(FilterData offSetInfo) {
+        this.offSetInfo = offSetInfo;
+    }
+
+    /**
+     * getOrderBy
+     * @return List
+     */
+    public List<FilterData> getOrderBy() {
+        if (orderBy == null)
+            orderBy = new ArrayList<>();
+        return orderBy;
+    }
+
+    /**
+     * setOrderBy
+     * @param orderBy orderBy
+     */
+    public void setOrderBy(List<FilterData> orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    /**
+     * getGroupBy
+     * @return String
+     */
+    public String getGroupBy() {
+        return groupBy;
+    }
+
+    /**
+     * setGroupBy
+     * @param groupBy groupBy
+     */
+    public void setGroupBy(String groupBy) {
+        this.groupBy = groupBy;
+    }
+
+    /**
+     * getWithWhere
+     * @return Boolean
+     */
+    public Boolean getWithWhere() {
+        return withWhere;
+    }
+
+    /**
+     * setWithWhere
+     * @param withWhere withWhere
+     */
+    public void setWithWhere(Boolean withWhere) {
+        this.withWhere = withWhere;
+    }
+
+    /**
+     * setSql
+     * @param sql sql
+     */
+    public void setSql(String sql) {
+        this.sql = sql;
+    }
+
+    /**
+     * getSql
+     * @return String
+     */
+    public String getSql() {
+        return sql;
+    }
+
+    /**
+     * getSbSQL
+     * @return String
+     */
+    public String getSbSQL() {
+        return sb.toString();
+    }
+
+    /**
+     * addHavingInfo
+     * @param havingInfo havingInfo
+     */
+    public void addHavingInfo(FilterData havingInfo) {
+        this.havingInfo = havingInfo;
+    }
+
+    /**
+     * getHavingInfo
+     * @return FilterData
+     */
+    public FilterData getHavingInfo() {
+        return havingInfo;
+    }
+
+    /**
+     * getHaving
+     * @return String
+     */
+    public String getHaving() {
+        return havingInfo == null || StringUtils.isBlank(havingInfo.getHavingInfo()) ? "" : " HAVING " + havingInfo.getHavingInfo();
+    }
 }
