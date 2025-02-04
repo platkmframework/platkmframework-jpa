@@ -39,4 +39,10 @@ public interface DatabaseMapper {
      * @return String
      */
     public String getVersion();
+    
+    /**
+     * get SQL Sentences Processor
+     * @return String
+     */
+    public String getSqlSentencesProcessor();
 }

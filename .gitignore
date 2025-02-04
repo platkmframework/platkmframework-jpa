@@ -51,4 +51,7 @@ Thumbs.db
 target
 .classpath
 .project
-
+.git
+target
+.classpath
+pom.xml

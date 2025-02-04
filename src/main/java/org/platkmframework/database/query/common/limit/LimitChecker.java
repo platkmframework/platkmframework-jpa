@@ -23,7 +23,7 @@ package org.platkmframework.database.query.common.limit;
 import javax.naming.LimitExceededException;
 import org.platkmframework.annotation.Service;
 import org.platkmframework.annotation.limit.ApplicationLimit;
-import org.platkmframework.content.ObjectContainer;
+import org.platkmframework.context.ObjectContainer; 
 
 /**
  *   Author:

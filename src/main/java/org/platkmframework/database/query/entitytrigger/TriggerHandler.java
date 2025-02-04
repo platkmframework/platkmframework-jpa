@@ -21,7 +21,8 @@
 package org.platkmframework.database.query.entitytrigger;
 
 import java.util.List;
-import org.platkmframework.content.ObjectContainer;
+
+import org.platkmframework.context.ObjectContainer;
 
 /**
  *   Author:
